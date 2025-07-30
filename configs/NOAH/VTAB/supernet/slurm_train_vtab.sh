@@ -8,7 +8,7 @@ PARTITION='dsta'
 JOB_NAME=VTAB-SUPERNET
 CONFIG=./experiments/NOAH/supernet/supernet-B_prompt.yaml
 GPUS=1
-CKPT=$1
+CKPT=./saves/caltech101_supernet_lr-0.0005_wd-0.0001/checkpoint.pth
 WEIGHT_DECAY=0.0001
 
 GPUS_PER_NODE=1
@@ -23,7 +23,7 @@ export PYTHONPATH="$(dirname "$0")/..":$PYTHONPATH
 RANDOM=${RANDOM:-42}
 
 for LR in 0.0005; do 
-    for DATASET in caltech101 dtd oxford_flowers102 dmlab; do 
+    for DATASET in caltech101; do 
         python supernet_train_prompt.py \
             --data-path=./data/vtab-1k/${DATASET} \
             --data-set=${DATASET} \
