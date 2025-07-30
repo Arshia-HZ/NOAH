@@ -21,9 +21,9 @@ import os.path as osp
 from PIL import Image
 
 dataset_config = [
-    ['caltech101', dict()],
+    # ['caltech101', dict()],
     # ['cifar', dict(num_classes=100)],
-    ['dtd', dict()],
+    # ['dtd', dict()],
     ['oxford_flowers102', dict()],
     # ['oxford_iiit_pet', dict()],
     # ['patch_camelyon', dict()],
@@ -31,7 +31,7 @@ dataset_config = [
     # ['svhn', dict()],
     # ['resisc45', dict()],
     # ['eurosat', dict()],
-    ['dmlab', dict()],
+    # ['dmlab', dict()],
     # ['kitti', dict(task='closest_vehicle_distance')],
     # ['smallnorb', dict(predicted_attribute='label_azimuth',dataset_postfix='azi')],
     # ['smallnorb', dict(predicted_attribute='label_elevation',dataset_postfix='ele')],

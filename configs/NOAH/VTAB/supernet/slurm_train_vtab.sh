@@ -23,7 +23,7 @@ export PYTHONPATH="$(dirname "$0")/..":$PYTHONPATH
 RANDOM=${RANDOM:-42}
 
 for LR in 0.0005; do 
-    for DATASET in caltech101 dtd oxford_flowers102 dmlab; do 
+    for DATASET in oxford_flowers102; do 
         python supernet_train_prompt.py \
             --data-path=./data/vtab-1k/${DATASET} \
             --data-set=${DATASET} \
@@ -32,7 +32,7 @@ for LR in 0.0005; do
             --output_dir=./saves/${DATASET}_supernet_lr-${LR}_wd-${WEIGHT_DECAY} \
             --batch-size=64 \
             --lr=${LR} \
-            --epochs=500 \
+            --epochs=250 \
             --weight-decay=${WEIGHT_DECAY} \
             --no_aug \
             --direct_resize \
