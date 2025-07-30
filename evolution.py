@@ -14,7 +14,7 @@ import os
 import yaml
 from lib.config import cfg, update_config_from_file
 
-from mmcv.runner import get_dist_info, init_dist
+# from mmcv.runner import get_dist_info, init_dist
 
 import model as models
 from timm.models import load_checkpoint
@@ -335,7 +335,7 @@ def get_args_parser():
     # evolution search parameters
     parser.add_argument('--max-epochs', type=int, default=20)
     parser.add_argument('--select-num', type=int, default=10)
-    parser.add_argument('--population-num', type=int, default=50
+    parser.add_argument('--population-num', type=int, default=50)
     parser.add_argument('--m_prob', type=float, default=0.2)
     parser.add_argument('--s_prob', type=float, default=0.4)
     parser.add_argument('--crossover-num', type=int, default=25)
@@ -610,9 +610,22 @@ def main(args):
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print('number of params:', n_parameters)
     if args.resume:
-        # import pdb;pdb.set_trace()
-        incompatible_keys = load_checkpoint(model_without_ddp, args.resume,strict=False)
-        print(incompatible_keys)
+        # Manually load the checkpoint with weights_only=False
+        # This is necessary because the checkpoint file contains more than just model weights.
+        # WARNING: Only do this if you trust the source of the checkpoint file.
+        checkpoint = torch.load(args.resume, map_location='cpu', weights_only=False)
+        
+        # The actual model weights are usually stored under the 'model' key
+        if 'model' in checkpoint:
+            state_dict = checkpoint['model']
+        else:
+            # If the key is not 'model', you might need to inspect the checkpoint file
+            # to find the correct key for the state dictionary.
+            state_dict = checkpoint
+
+        # Load the state dictionary into the model
+        incompatible_keys = model_without_ddp.load_state_dict(state_dict, strict=False)
+        print("Loaded checkpoint with the following incompatible keys:", incompatible_keys)
 
 
     choices = {'depth': cfg.SUPERNET.DEPTH,

@@ -327,8 +327,19 @@ def main(args):
         if 'pth' in args.resume :
             if args.nb_classes != model.head.weight.shape[0]:
                 model.reset_classifier(args.nb_classes)
-            incompatible_keys = load_checkpoint(model, args.resume,strict=False)
-            print(incompatible_keys)
+            checkpoint = torch.load(args.resume, map_location='cpu', weights_only=False)
+    
+            # The actual model weights are usually stored under the 'model' key
+            if 'model' in checkpoint:
+                state_dict = checkpoint['model']
+            else:
+                # If the key is not 'model', you might need to inspect the checkpoint file
+                # to find the correct key for the state dictionary.
+                state_dict = checkpoint
+
+            # Load the state dictionary into the model
+            incompatible_keys = model.load_state_dict(state_dict, strict=False)
+            print("Loaded checkpoint with the following incompatible keys:", incompatible_keys)
         else:
             load_checkpoint(model, args.resume)
             if args.nb_classes != model.head.weight.shape[0]:
