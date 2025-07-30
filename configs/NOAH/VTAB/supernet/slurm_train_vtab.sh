@@ -8,7 +8,7 @@ PARTITION='dsta'
 JOB_NAME=VTAB-SUPERNET
 CONFIG=./experiments/NOAH/supernet/supernet-B_prompt.yaml
 GPUS=1
-CKPT=./saves/caltech101_supernet_lr-0.0005_wd-0.0001/checkpoint.pth
+CKPT=$1
 WEIGHT_DECAY=0.0001
 
 GPUS_PER_NODE=1
