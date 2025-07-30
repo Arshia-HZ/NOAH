@@ -32,7 +32,7 @@ for LR in 0.0005; do
             --output_dir=./saves/${DATASET}_supernet_lr-${LR}_wd-${WEIGHT_DECAY} \
             --batch-size=64 \
             --lr=${LR} \
-            --epochs=500 \
+            --epochs=300 \
             --weight-decay=${WEIGHT_DECAY} \
             --no_aug \
             --direct_resize \
