@@ -42,7 +42,7 @@ class OxfordIIITPetData(base.ImageTfdsData):
 
   def __init__(self, data_dir=None, train_split_percent=None):
 
-    dataset_name = "oxford_iiit_pet:3.*.*"
+    dataset_name = "oxford_iiit_pet:4.*.*"
     name = dataset_name.split(':')[0]
     dataset_builder = tfds.builder(dataset_name, data_dir=f'data/vtab/{name}/tfrecord')
     dataset_builder.download_and_prepare(

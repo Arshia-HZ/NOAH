@@ -21,6 +21,8 @@ from __future__ import print_function
 import task_adaptation.data.base as base
 from task_adaptation.registry import Registry
 import tensorflow_datasets as tfds
+import os
+os.environ.setdefault("TFDS_DOWNLOAD_GCS", "1")
 
 
 @Registry.register("data.dtd", "class")

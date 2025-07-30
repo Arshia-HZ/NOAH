@@ -21,6 +21,7 @@ from __future__ import print_function
 import task_adaptation.data.base as base
 from task_adaptation.registry import Registry
 import tensorflow_datasets as tfds
+import os
 
 
 # Percentage of the original training set retained for training, the rest is
@@ -51,6 +52,12 @@ class Caltech101(base.ImageTfdsData):
     
     dataset_name = "caltech101:3.*.*"
     name = dataset_name.split(':')[0]
+    # Ensure base directory exists
+    base_dir = f'data/vtab/{name}'
+    os.makedirs(base_dir, exist_ok=True)
+    # Create necessary directories to avoid FileNotFoundError
+    for subdir in ['tfrecord', 'raw', 'extracted']:
+      os.makedirs(f'data/vtab/{name}/{subdir}', exist_ok=True)
     dataset_builder = tfds.builder(dataset_name, data_dir=f'data/vtab/{name}/tfrecord')
     dataset_builder.download_and_prepare(
       download_dir=f'data/vtab/{name}/raw',
