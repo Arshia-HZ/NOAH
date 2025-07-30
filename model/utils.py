@@ -2,7 +2,7 @@ import torch
 import math
 import warnings
 from itertools import repeat
-from torch._six import container_abcs
+from collections.abc import Iterable
 import torch.nn as nn
 
 def _no_grad_trunc_normal_(tensor, mean, std, a, b):
@@ -63,7 +63,7 @@ def trunc_normal_(tensor, mean=0., std=1., a=-2., b=2.):
 
 def _ntuple(n):
     def parse(x):
-        if isinstance(x, container_abcs.Iterable):
+        if isinstance(x, Iterable):
             return x
         return tuple(repeat(x, n))
     return parse

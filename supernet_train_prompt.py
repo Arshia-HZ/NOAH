@@ -24,7 +24,7 @@ import model as models
 from timm.models import load_checkpoint
 
 #SLUMRM
-from mmcv.runner import get_dist_info, init_dist
+# from mmcv.runner import get_dist_info, init_dist
 
 import os
 
